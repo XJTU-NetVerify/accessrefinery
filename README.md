@@ -17,7 +17,7 @@ Moreover, the artifact includes the full implementations of *AccessRefinery* and
 
 You can download the AccessRefinery FSE 2026 artifact from either of the following sources:
 
-- Archived version: Zenodo repository with DOI [10.5281/zenodo.19488469](10.5281/zenodo.19488469)
+- Archived version: Zenodo repository with DOI [10.5281/zenodo.19488469](https://doi.org/10.5281/zenodo.19488469)
 
 - Maintained version: [GitHub repository](https://github.com/XJTU-NetVerify/accessrefinery.git)
 
