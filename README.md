@@ -27,7 +27,7 @@ git clone https://github.com/XJTU-NetVerify/accessrefinery.git
 
 ## Installing AccessRefinery
 
-Because this repository includes a baseline reimplementation of AWS Access Analyzer that depends on the SMT solvers `CVC5` and `Z3`, we provide automated installation steps. We recommend using Ubuntu because path-related dependency issues may occur on Windows and macOS.
+Because this repository includes a baseline reimplementation of AWS Access Analyzer that depends on the SMT solvers `CVC5` and `Z3`, we provide automated installation steps. We recommend using Linux Ubuntu system because path-related dependency issues may occur on Windows and macOS.
 
 see [REQUIREMENTS.md](https://github.com/XJTU-NetVerify/accessrefinery/blob/main/REQUIREMENTS.md)  and [INSTALL.md](https://github.com/XJTU-NetVerify/accessrefinery/blob/main/INSTALL.md) for details.
 

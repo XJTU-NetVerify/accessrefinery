@@ -3,7 +3,7 @@
 
 After generating `results/`, we explain how to reproduce the figures, tables, and conclusions reported in the paper.
 
-#### 1. Target Conclusion (Line 750 in Section 5):
+#### 1. Target Conclusion (Section 5):
 
 "*AWS provides an online Command Line Interface (CLI) for Access Analyzer, which we use to validate the correctness of our re-implementation. Specifically, for the 6-key dataset with 11 to 15 statements, both versions time out (> 1 hour). ...*"
 
@@ -26,7 +26,7 @@ See the last line of `archive_results/accessanalyzer_z3_miner_1rs/Scalability_05
 
 To this end, the conclusion holds.
 
-#### 2. Target Conclusion (Line 751 in Section 5):
+#### 2. Target Conclusion (Section 5):
 
 "*AWS provides an online Command Line Interface (CLI) for Access Analyzer, which we use to validate the correctness of our re-implementation. ... Both versions produce identical intents on the Correctness, 5-key, and 6-key datasets.*"
 
@@ -42,7 +42,7 @@ sh tools/accessanalyzer-reimpl/running_accessanalyzer_compare.sh
 
 - `results/accessanalyzer_miner_compare_results/*.log`
 
-#### 3. Target Conclusion (Line 760 in Section 6.1): 
+#### 3. Target Conclusion (Section 6.1): 
 
 "*We conducted a series of basic Boolean operation tests.*"
 
@@ -67,7 +67,7 @@ mvn test -pl ./accessrefinery/mcp -Dtest=MCPTest.java#testComplexSATOperations
 [INFO] ------------------------------------------------------------------------
 ```
 
-#### 4. Target Figure (Line 776 in Section 6.1): Figure 10  
+#### 4. Target Figure (Section 6.1): Figure 10  
 
 <img src="docs/figures/figure10.png" width="450"/>
 
@@ -110,7 +110,7 @@ bash ./tools/figures/extract_correctness_synthetic.sh
 
 - `paper_figures/results/RQ1-Experiment-Correctness.pdf`
 
-#### 5. Target Conclusion (Line 770 in Section 6.1):
+#### 5. Target Conclusion (Section 6.1):
 
 "*We compared the intents produced by AccessRefinery (without intent reduction), our re-implementation of Access Analyzer, and the AWS Access Analyzer via the CLI API. On synthetic datasets, all three produce the same set of intents.*"
 
@@ -130,7 +130,7 @@ sh tools/accessanalyzer-reimpl/running_accessanalyzer_compare_with_refinery.sh
   - `accessrefinery_miner_compare_results/*.log`
   - `accessanalyzer_miner_compare_results_with_refinery/*.log`
 
-#### 6. Target Conclusion (Line 788 in Section 6.1):
+#### 6. Target Conclusion (Section 6.1):
 
 "*(1) The reduced intents fully cover the policy. (2) Removing any intent from the reduced intents causes the remaining intents to no longer cover the policy.*"
 
@@ -147,7 +147,7 @@ bash ./tools/accessanalyzer-reimpl/check_coverage.sh
   - `Scalability_05Keys/*_coverage.log`
   - `Scalability_06Keys/*_coverage.log`
 
-#### 7. Target Figure (Line 804 in Section 6.2): Figure 11
+#### 7. Target Figure (Section 6.2): Figure 11
 
 <img src="docs/figures/figure11.png" width="450"/>
 
@@ -187,7 +187,7 @@ ls paper_figures/results/RQ2*
 paper_figures/results/RQ2-Experiment-Effectiveness.pdf
 ```
 
-#### 8. Target Figure (Line 842 in Section 6.3): Figure 12
+#### 8. Target Figure (Section 6.3): Figure 12
 
 <img src="docs/figures/figure12.png" width="450"/>
 
@@ -225,7 +225,7 @@ bash tools/figures/extract_scalability_MCI.sh
 
 - `paper_figures/results/RQ3-Experiment-Scalability-Mining.pdf`
 
-#### 9. Target Figure (Line 850 in Section 6.3): Figure 13
+#### 9. Target Figure (Section 6.3): Figure 13
 
 <img src="docs/figures/figure13.png" width="450"/>
 
@@ -263,13 +263,13 @@ bash tools/figures/extract_scalability_RRI.sh
 
 - `paper_figures/results/RQ3-Experiment-Scalability-Reducing.pdf`
 
-#### 10. Target Figure (Line 875 in Section 6.4): Figure 14
+#### 10. Target Figure (Section 6.4): Figure 14
 
 <img src="docs/figures/figure14.png" width="450"/>
 
 These logs are omitted for commercial reasons.
 
-#### 11. Target Conclusion (Line 884 in Section 6.5):
+#### 11. Target Conclusion (Section 6.5):
 
 "*For intent mining, using JavaBDD is 1-6x faster than using MiniSAT (for clarity, the figure is omitted).*"
 
@@ -309,7 +309,7 @@ The following command generates the figure omitted in the paper.
 
 - `paper_figures/results/RQ5-Experiment-MicroBenchmark-Mining.pdf`
 
-#### 12. Target Figure (Line 898 in Section 6.5): Figure 15
+#### 12. Target Figure (Section 6.5): Figure 15
 
 <img src="docs/figures/figure15.png" width="450"/>
 
@@ -351,7 +351,7 @@ The following command generates Figure 15 in the paper.
 
 - `paper_figures/results/RQ5-Experiment-MicroBenchmark-Reducing.pdf`
 
-#### 13. Target Table (Line 913 in Section 6.6): Table 2
+#### 13. Target Table (Section 6.6): Table 2
 
 <img src="docs/figures/table2.png" width="450"/>
 
