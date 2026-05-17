@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# compare.sh
+# Purpose: semantically compare JSON output directories produced by
+# different tools or runs. Normalizes JSON structures to minimize
+# irrelevant ordering differences before comparison and writes a
+# per-run log with timestamps and normalized JSON when differences
+# are detected.
+#
 # Usage: ./compare.sh dir1 dir2 [log_file]
 
 DIR1=$1
@@ -19,20 +26,25 @@ echo "" >> "$LOG_FILE"
 
 # Function to normalize JSON with safe sorting
 normalize_json() {
+  # Normalize JSON to a compact comparable structure.
+  # - Ensure certain fields are arrays for consistent typing.
+  # - Sort object entries by key to remove ordering differences.
+  # - Extract common fields into a top-level `findings` array.
   jq '
     def ensure_array: if type == "array" then . else [.] end;
-    def sort_condition: 
-      if type == "object" then 
+    def sort_condition:
+      if type == "object" then
+        # Ensure nested values that should be arrays are arrays
         with_entries(.value |= ensure_array) | to_entries | sort_by(.key) | from_entries
       else . end;
-    
+
     if (.findings | type == "array") then
       {
         findings: [.findings[] | {
           action: (.action // [] | ensure_array),
           resource: ([.resource // ""] | if type == "array" then sort else . end),
-          principal: { 
-            AWS: (.principal.AWS // [] | ensure_array | if type == "array" then sort else . end) 
+          principal: {
+            AWS: (.principal.AWS // [] | ensure_array | if type == "array" then sort else . end)
           },
           condition: (.condition // {} | sort_condition)
         }]
@@ -42,8 +54,8 @@ normalize_json() {
         findings: [.Finding[] | {
           action: (.Action // [] | ensure_array),
           resource: (.Resource // [] | ensure_array),
-          principal: { 
-            AWS: (.Principal.AWS // [] | ensure_array) 
+          principal: {
+            AWS: (.Principal.AWS // [] | ensure_array)
           },
           condition: (.Condition // {} | sort_condition)
         }]

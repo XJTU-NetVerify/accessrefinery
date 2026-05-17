@@ -1,15 +1,24 @@
 #!/bin/bash
+
+# Run AccessAnalyzer reduction using CVC5 as the SMT solver.
+# This script mirrors the mining scripts but invokes the tool in
+# reducer mode (-r) to simplify formulas.
+
 SOLVER="CVC5"
 SOLVER_LOWER="cvc5"
 REDUCE_TYPE="reducer"
 TARGET_DIR="accessanalyzer_${SOLVER_LOWER}_${REDUCE_TYPE}_1rs"
+
+# Per-file timeout
 TIMEOUT=3600
-echo "Scanning for datasets..."
+
+echo "Scanning for datasets"
 datasets=(
     "data/Correctness"
     "data/Scalability_05Keys"
     "data/Scalability_06Keys"
 )
+
 for dataset_dir in "${datasets[@]}"; do
     dataset_name=$(basename "$dataset_dir")
     files=($(find "$dataset_dir" -name "*.json" | sort))
@@ -18,14 +27,20 @@ for dataset_dir in "${datasets[@]}"; do
     for file in "${files[@]}"; do
         filename=$(basename "$file")
         if [ $timeout_flag -eq 1 ]; then continue; fi
+
+        # Run the reducer with timeout
         timeout $TIMEOUT java -jar target/accessanalyzer-1.0.jar -r -s "$SOLVER" -f "$file"
         if [ $? -eq 124 ]; then timeout_flag=1; fi
     done
 done
+
+# Move result directory into a named target directory
 if [ -d "result" ]; then
     rm -rf "$TARGET_DIR"
     mv result "$TARGET_DIR"
 fi
+
+# Flatten per-policy outputs and compute a summary CSV per dataset
 for dataset_dir in "${datasets[@]}"; do
     dataset_name=$(basename "$dataset_dir")
     dataset_target_dir="$TARGET_DIR/$dataset_name"

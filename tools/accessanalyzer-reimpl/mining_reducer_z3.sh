@@ -1,15 +1,22 @@
 #!/bin/bash
+
+# Run AccessAnalyzer reduction using Z3 as the SMT solver.
+
 SOLVER="Z3"
 SOLVER_LOWER="z3"
 REDUCE_TYPE="reducer"
 TARGET_DIR="accessanalyzer_${SOLVER_LOWER}_${REDUCE_TYPE}_1rs"
+
+# Timeout per file
 TIMEOUT=3600
-echo "Scanning for datasets..."
+
+echo "Scanning for datasets"
 datasets=(
     "data/Correctness"
     "data/Scalability_05Keys"
     "data/Scalability_06Keys"
 )
+
 for dataset_dir in "${datasets[@]}"; do
     dataset_name=$(basename "$dataset_dir")
     files=($(find "$dataset_dir" -name "*.json" | sort))
@@ -18,14 +25,18 @@ for dataset_dir in "${datasets[@]}"; do
     for file in "${files[@]}"; do
         filename=$(basename "$file")
         if [ $timeout_flag -eq 1 ]; then continue; fi
+
+        # Run the reducer with timeout
         timeout $TIMEOUT java -jar target/accessanalyzer-1.0.jar -r -s "$SOLVER" -f "$file"
         if [ $? -eq 124 ]; then timeout_flag=1; fi
     done
 done
+
 if [ -d "result" ]; then
     rm -rf "$TARGET_DIR"
     mv result "$TARGET_DIR"
 fi
+
 for dataset_dir in "${datasets[@]}"; do
     dataset_name=$(basename "$dataset_dir")
     dataset_target_dir="$TARGET_DIR/$dataset_name"

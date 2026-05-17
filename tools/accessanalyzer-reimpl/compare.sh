@@ -1,6 +1,10 @@
+
 #!/bin/bash
 
-# Usage: ./compare.sh dir1 dir2 [log_file]
+# compare.sh (accessanalyzer-reimpl)
+# Purpose: semantically compare two directories of JSON outputs produced by
+# different tools or runs. Normalizes JSON fields and sorts keys to remove
+# irrelevant ordering differences, then logs differences with normalized JSON.
 
 DIR1=$1
 DIR2=$2
@@ -11,28 +15,31 @@ if [ ! -d "$DIR1" ] || [ ! -d "$DIR2" ]; then
   exit 1
 fi
 
-# Initialize log file with English date format
+# Initialize log file with timestamp and context
 echo "=== JSON Directory Comparison Log ===" > "$LOG_FILE"
 echo "Start time: $(date "+%Y-%m-%d %H:%M:%S")" >> "$LOG_FILE"
 echo "Comparing directories: $DIR1 and $DIR2" >> "$LOG_FILE"
 echo "" >> "$LOG_FILE"
 
-# Function to normalize JSON with safe sorting
+# Function to normalize JSON for comparison
 normalize_json() {
+  # - ensure array types where needed
+  # - normalize different field names (Finding/Findings) into `findings`
+  # - sort object keys to make comparisons deterministic
   jq '
     def ensure_array: if type == "array" then . else [.] end;
-    def sort_condition: 
-      if type == "object" then 
+    def sort_condition:
+      if type == "object" then
         with_entries(.value |= ensure_array) | to_entries | sort_by(.key) | from_entries
       else . end;
-    
+
     if (.findings | type == "array") then
       {
         findings: [.findings[] | {
           action: (.action // [] | ensure_array),
           resource: ([.resource // ""] | if type == "array" then sort else . end),
-          principal: { 
-            AWS: (.principal.AWS // [] | ensure_array | if type == "array" then sort else . end) 
+          principal: {
+            AWS: (.principal.AWS // [] | ensure_array | if type == "array" then sort else . end)
           },
           condition: (.condition // {} | sort_condition)
         }]
@@ -42,19 +49,19 @@ normalize_json() {
         findings: [.Finding[] | {
           action: (.Action // [] | ensure_array),
           resource: (.Resource // [] | ensure_array),
-          principal: { 
-            AWS: (.Principal.AWS // [] | ensure_array) 
+          principal: {
+            AWS: (.Principal.AWS // [] | ensure_array)
           },
           condition: (.Condition // {} | sort_condition)
         }]
       }
-      elif (.Findings | type == "array") then
+    elif (.Findings | type == "array") then
       {
         findings: [.Findings[] | {
           action: (.Action // [] | ensure_array),
           resource: (.Resource // [] | ensure_array),
-          principal: { 
-            AWS: (.Principal.AWS // [] | ensure_array) 
+          principal: {
+            AWS: (.Principal.AWS // [] | ensure_array)
           },
           condition: (.Condition // {} | sort_condition)
         }]
