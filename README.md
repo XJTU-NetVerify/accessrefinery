@@ -28,6 +28,18 @@ We further extend our previous work published at FSE 2026 by accelerating EC par
 
 > In this README and the source code, journal extensions are marked with **`[Journal Extension]`** and `//ADD_BEGIN_JOURNAL` / `//ADD_END_JOURNAL`, respectively.
 
+## Getting AccessRefinery
+
+You can download the AccessRefinery FSE 2026 artifact from either of the following sources:
+
+- Archived version: Zenodo repository with DOI [10.5281/zenodo.23332339](https://doi.org/10.5281/zenodo.23332339)
+
+- Maintained version: [GitHub repository](https://github.com/XJTU-NetVerify/accessrefinery/tree/journal)
+
+```shell
+git clone https://github.com/XJTU-NetVerify/accessrefinery.git -b journal
+```
+
 ## Installing AccessRefinery
 
 see [REQUIREMENTS.md](https://github.com/XJTU-NetVerify/accessrefinery/blob/main/REQUIREMENTS.md)  and [INSTALL.md](https://github.com/XJTU-NetVerify/accessrefinery/blob/main/INSTALL.md) for details.
