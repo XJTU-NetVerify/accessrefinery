@@ -30,7 +30,7 @@ We further extend our previous work published at FSE 2026 by accelerating EC par
 
 ## Getting AccessRefinery
 
-You can download the AccessRefinery FSE 2026 artifact from either of the following sources:
+You can download the AccessRefinery artifact of Journal Version from either of the following sources:
 
 - Archived version: Zenodo repository with DOI [10.5281/zenodo.23332339](https://doi.org/10.5281/zenodo.23332339)
 
